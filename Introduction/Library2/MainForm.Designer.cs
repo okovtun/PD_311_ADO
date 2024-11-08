@@ -31,6 +31,7 @@
 			this.textBoxQuery = new System.Windows.Forms.TextBox();
 			this.buttonExecute = new System.Windows.Forms.Button();
 			this.dataGridView = new System.Windows.Forms.DataGridView();
+			this.comboBoxTables = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -60,16 +61,27 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView.Location = new System.Drawing.Point(13, 40);
+			this.dataGridView.Location = new System.Drawing.Point(13, 64);
 			this.dataGridView.Name = "dataGridView";
-			this.dataGridView.Size = new System.Drawing.Size(436, 181);
+			this.dataGridView.Size = new System.Drawing.Size(436, 195);
 			this.dataGridView.TabIndex = 2;
+			// 
+			// comboBoxTables
+			// 
+			this.comboBoxTables.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxTables.FormattingEnabled = true;
+			this.comboBoxTables.Location = new System.Drawing.Point(13, 37);
+			this.comboBoxTables.Name = "comboBoxTables";
+			this.comboBoxTables.Size = new System.Drawing.Size(343, 21);
+			this.comboBoxTables.TabIndex = 3;
+			this.comboBoxTables.SelectedIndexChanged += new System.EventHandler(this.comboBoxTables_SelectedIndexChanged);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(461, 233);
+			this.ClientSize = new System.Drawing.Size(461, 271);
+			this.Controls.Add(this.comboBoxTables);
 			this.Controls.Add(this.dataGridView);
 			this.Controls.Add(this.buttonExecute);
 			this.Controls.Add(this.textBoxQuery);
@@ -86,6 +98,7 @@
 		private System.Windows.Forms.TextBox textBoxQuery;
 		private System.Windows.Forms.Button buttonExecute;
 		private System.Windows.Forms.DataGridView dataGridView;
+		private System.Windows.Forms.ComboBox comboBoxTables;
 	}
 }
 
