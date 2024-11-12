@@ -15,16 +15,33 @@ namespace Academy
 		public MainForm()
 		{
 			InitializeComponent();
-			dataGridViewStudents.Rows.CollectionChanged += new CollectionChangeEventHandler(CountRows);
+			LoadStudents();
+			LoadGroups();
+		}
+		void LoadStudents()
+		{
+			dataGridViewStudents.Rows.CollectionChanged += new CollectionChangeEventHandler(SetStatusBarText);
 			dataGridViewStudents.DataSource =
 				Connector.Select(
-					"last_name, first_name, middle_name, birth_date, group_name, direction_name", 
+					"student_id, last_name, first_name, middle_name, birth_date, group_name, direction_name", 
 					"Students, Groups, Directions",
 					"[group]=group_id AND direction=direction_id");
 		}
-		void CountRows(object sender, EventArgs e)
+		void LoadGroups()
 		{
-			toolStripStatusLabelStudentsCount.Text = $"Количество студентов: {dataGridViewStudents.RowCount}.";
+			dataGridViewGroups.Rows.CollectionChanged += new CollectionChangeEventHandler(SetStatusBarText);
+			dataGridViewGroups.DataSource =
+				Connector.Select(
+					"group_name, COUNT(student_id) AS 'Количество студентов', direction_name",
+					"Groups, Directions, Students",
+					"direction=direction_id AND [group]=group_id GROUP BY [group_name], direction_name");
+
+			comboBoxGroupDirection.Items.AddRange(Connector.Select("direction_name", "Directions").Rows.Cast<String>().ToArray());
+		}
+		void SetStatusBarText(object sender, EventArgs e)
+		{
+			toolStripStatusLabelStudentsCount.Text = $"Number of {tabControlMain.SelectedTab.Text.ToLower()}: {(sender as DataGridViewRowCollection).Count - 1}.";
+			//toolStripStatusLabelStudentsCount.Text = $"Number of {tabControlMain.SelectedTab.Text.ToLower()}: {dataGridViewStudents.RowCount}.";
 		}
 
 		private void textBoxSearchStudent_TextChanged(object sender, EventArgs e)
@@ -46,6 +63,20 @@ namespace Academy
 					"Students, Directions, Groups",
 					$"[group]=group_id AND direction=direction_id AND {searchPattern};"
 				);
+		}
+
+		private void tabControlMain_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			switch ((sender as TabControl).SelectedTab.Text)
+			{
+				case "Students":	SetStatusBarText(dataGridViewStudents.Rows, e);	break;
+				case "Groups":		SetStatusBarText(dataGridViewGroups.Rows, e);	break;
+			}
+		}
+
+		private void MainForm_Load(object sender, EventArgs e)
+		{
+			SetStatusBarText(dataGridViewStudents.Rows, e);
 		}
 	}
 }
