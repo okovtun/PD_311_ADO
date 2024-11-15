@@ -43,5 +43,23 @@ namespace Academy
 			connection.Close();
 			return table;
 		}
+		public static List<string> SelectColumn(string column, string table)
+		{
+			List<string> values = new List<string>();
+			string cmd = $"SELECT {column} FROM {table}";
+			SqlCommand command = new SqlCommand(cmd, connection);
+			connection.Open();
+			SqlDataReader reader = command.ExecuteReader();
+			if (reader.HasRows)
+			{
+				while (reader.Read())
+				{
+					values.Add(reader[0].ToString());
+				}
+			}
+			reader.Close();
+			connection.Close();
+			return values;
+		}
 	}
 }

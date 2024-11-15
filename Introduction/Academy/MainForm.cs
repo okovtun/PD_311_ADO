@@ -7,16 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace Academy
 {
 	public partial class MainForm : Form
 	{
+		AddGroupForm addGroup;
 		public MainForm()
 		{
 			InitializeComponent();
 			LoadStudents();
 			LoadGroups();
+			addGroup = new AddGroupForm();
+			AllocConsole();
 		}
 		void LoadStudents()
 		{
@@ -36,7 +40,8 @@ namespace Academy
 					"Groups, Directions, Students",
 					"direction=direction_id AND [group]=group_id GROUP BY [group_name], direction_name");
 
-			comboBoxGroupDirection.Items.AddRange(Connector.Select("direction_name", "Directions").Rows.Cast<String>().ToArray());
+			//comboBoxGroupDirection.Items.AddRange(Connector.Select("direction_name", "Directions").Rows.Cast<String>().ToArray());
+			comboBoxGroupDirection.Items.AddRange(Connector.SelectColumn("direction_name", "Directions").ToArray());
 		}
 		void SetStatusBarText(object sender, EventArgs e)
 		{
@@ -78,5 +83,17 @@ namespace Academy
 		{
 			SetStatusBarText(dataGridViewStudents.Rows, e);
 		}
+
+		private void buttonAddGroup_Click(object sender, EventArgs e)
+		{
+			//AddGroupForm addGroup = new AddGroupForm();
+			if (addGroup.ShowDialog() == DialogResult.OK)
+			{
+
+			}
+		}
+
+		[DllImport("kernel32")]
+		static extern bool AllocConsole();
 	}
 }
