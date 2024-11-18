@@ -16,8 +16,10 @@ namespace Academy
 		public AddGroupForm()
 		{
 			InitializeComponent();
-			comboBoxLearningForm.Items.AddRange(Connector.SelectColumn("form_name", "LearningForms").ToArray());
-			comboBoxGroupDirection.Items.AddRange(Connector.SelectColumn("direction_name", "Directions").ToArray());
+			//comboBoxLearningForm.Items.AddRange(Connector.SelectColumn("form_name", "LearningForms").ToArray());
+			//comboBoxGroupDirection.Items.AddRange(Connector.SelectColumn("direction_name", "Directions").ToArray());
+			comboBoxLearningForm.Items.AddRange(Connector.LearningForms.Keys.ToArray());
+			comboBoxGroupDirection.Items.AddRange(Connector.Directions.Keys.ToArray());
 			//SetWeekDays(96);
 		}
 		public byte GetWeekDays()
@@ -54,6 +56,17 @@ namespace Academy
 			comboBoxGroupDirection.SelectedIndex = -1;
 			comboBoxLearningForm.SelectedIndex = -1;
 			SetWeekDays(0);
+		}
+		public void Init(Group group)
+		{
+			Group = new Group(group);
+
+			textBoxGroupName.Text = group.GroupName;
+			comboBoxGroupDirection.SelectedIndex = group.Direction - 1;
+			comboBoxLearningForm.SelectedIndex = group.LearningForm - 1;
+			SetWeekDays(group.LearningDays);
+			dateTimePickerGroupStart.Value = group.StartDate;
+			dateTimePickerGroupTime.Value = DateTime.Now.Date + group.LearningTime;
 		}
 
 		private void buttonReset_Click(object sender, EventArgs e)

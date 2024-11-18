@@ -15,5 +15,20 @@ namespace Academy
 		public int Direction { get; set; }
 		public int LearningForm { get; set; }
 		public byte LearningDays { get; set; }
+
+		public Group()
+		{
+
+		}
+		public Group(Group other)
+		{
+			this.ID = other.ID;
+			this.GroupName = other.GroupName;
+			this.StartDate = other.StartDate;
+			this.LearningTime = other.LearningTime;
+			this.Direction = other.Direction;
+			this.LearningForm = other.LearningForm;
+			this.LearningDays = other.LearningDays;
+		}
 	}
 }
