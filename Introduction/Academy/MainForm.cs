@@ -35,10 +35,17 @@ namespace Academy
 		{
 			dataGridViewGroups.Rows.CollectionChanged += new CollectionChangeEventHandler(SetStatusBarText);
 			dataGridViewGroups.DataSource =
-				Connector.Select(
-					"group_name, COUNT(student_id) AS 'Количество студентов', direction_name",
-					"Groups, Directions, Students",
-					"direction=direction_id AND [group]=group_id GROUP BY [group_name], direction_name");
+			//Connector.Select(
+			//	"group_name, COUNT(student_id) AS 'Количество студентов', direction_name",
+			//	"Groups, Directions, Students",
+			//	"direction=direction_id AND [group]=group_id GROUP BY [group_name], direction_name");
+
+			Connector.Select
+			(
+				"group_id, group_name,start_date,learning_time,direction_name,form_name,learning_days",
+				"Groups,Directions,LearningForms",
+				"direction=direction_id AND learning_form=form_id"
+				);
 
 			//comboBoxGroupDirection.Items.AddRange(Connector.Select("direction_name", "Directions").Rows.Cast<String>().ToArray());
 			comboBoxGroupDirection.Items.AddRange(Connector.SelectColumn("direction_name", "Directions").ToArray());
@@ -86,10 +93,20 @@ namespace Academy
 
 		private void buttonAddGroup_Click(object sender, EventArgs e)
 		{
+			addGroup.ClearData();
 			//AddGroupForm addGroup = new AddGroupForm();
 			if (addGroup.ShowDialog() == DialogResult.OK)
 			{
-
+				//LoadGroups();
+				Group group = new Group();
+				group.GroupName = addGroup.textBoxGroupName.Text;
+				group.StartDate = addGroup.dateTimePickerGroupStart.Value;
+				group.LearningTime = addGroup.dateTimePickerGroupTime.Value.TimeOfDay;
+				group.Direction = addGroup.comboBoxGroupDirection.SelectedIndex + 1;
+				group.LearningForm = addGroup.comboBoxLearningForm.SelectedIndex + 1;
+				group.LearningDays = addGroup.GetWeekDays();
+				Connector.InsertGroup(group);
+				LoadGroups();
 			}
 		}
 

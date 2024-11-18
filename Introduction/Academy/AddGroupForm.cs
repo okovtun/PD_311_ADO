@@ -10,14 +10,15 @@ using System.Windows.Forms;
 
 namespace Academy
 {
-	public partial class AddGroupForm : Form
+	internal partial class AddGroupForm : Form
 	{
+		public Group Group { get; set; }
 		public AddGroupForm()
 		{
 			InitializeComponent();
 			comboBoxLearningForm.Items.AddRange(Connector.SelectColumn("form_name", "LearningForms").ToArray());
 			comboBoxGroupDirection.Items.AddRange(Connector.SelectColumn("direction_name", "Directions").ToArray());
-			SetWeekDays(96);
+			//SetWeekDays(96);
 		}
 		public byte GetWeekDays()
 		{
@@ -42,6 +43,22 @@ namespace Academy
 		private void buttonSaveGroup_Click(object sender, EventArgs e)
 		{
 			byte days = GetWeekDays();
+			//Group.GroupName = textBoxGroupName.Text;
+			//Group.LearningDays = GetWeekDays();
+			//Group.LearningForm = Connector.InsertGroup(Group);
+			Console.WriteLine(days);
+		}
+		public void ClearData()
+		{
+			textBoxGroupName.Text = "";
+			comboBoxGroupDirection.SelectedIndex = -1;
+			comboBoxLearningForm.SelectedIndex = -1;
+			SetWeekDays(0);
+		}
+
+		private void buttonReset_Click(object sender, EventArgs e)
+		{
+			ClearData();
 		}
 	}
 }

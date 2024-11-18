@@ -9,9 +9,9 @@ void ShiftRight(char arr[], const int n, int number_of_shifts);
 void main()
 {
 	setlocale(LC_ALL, "");
-	cout << (111 ^ 111) << endl;
+	/*cout << (111 ^ 111) << endl;
 	cout << (49 & 1) << endl;
-	cout << (-5 >> 2) << endl;
+	cout << (-5 >> 2) << endl;*/
 	/*const int n = 9;
 	char bin[n] = "00000101";
 	char key;
@@ -22,6 +22,8 @@ void main()
 		key == 'a' ? ShiftLeft(bin, n, 1) : ShiftRight(bin, n, 1);
 		system("CLS");
 	} while (key!=27);*/
+	cout << ULLONG_MAX << endl;
+	cout << 22.56 << endl;
 }
 void Print(char arr[], const int n)
 {

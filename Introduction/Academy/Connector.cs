@@ -61,5 +61,24 @@ namespace Academy
 			connection.Close();
 			return values;
 		}
+		public static void InsertGroup(Group group)
+		{
+			string cmd =
+"IF NOT EXISTS (SELECT group_id FROM Groups WHERE group_name=@group_name)" +
+" BEGIN" +
+	" INSERT Groups	(group_name,   [start_date],  learning_time,  direction,  learning_form,  learning_days)" +
+	$" VALUES		(@group_name, @start_date, @learning_time, @direction, @learning_form, @learning_days)" +
+" END";
+			SqlCommand command = new SqlCommand(cmd, connection);
+			command.Parameters.Add("@group_name",	SqlDbType.NVarChar, 16).Value = group.GroupName;
+			command.Parameters.Add("@start_date",	SqlDbType.Date).Value = group.StartDate;
+			command.Parameters.Add("@learning_time",SqlDbType.Time).Value = group.LearningTime;
+			command.Parameters.Add("@direction",	SqlDbType.SmallInt).Value = group.Direction;
+			command.Parameters.Add("@learning_form",SqlDbType.TinyInt).Value = group.LearningForm;
+			command.Parameters.Add("@learning_days",SqlDbType.TinyInt).Value = group.LearningDays;
+			connection.Open();
+			command.ExecuteNonQuery();
+			connection.Close();
+		}
 	}
 }

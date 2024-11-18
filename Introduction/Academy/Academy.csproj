@@ -55,6 +55,7 @@
       <DependentUpon>AddGroupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Connector.cs" />
+    <Compile Include="Group.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

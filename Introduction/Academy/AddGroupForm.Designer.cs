@@ -42,6 +42,7 @@
 			this.dateTimePickerGroupStart = new System.Windows.Forms.DateTimePicker();
 			this.buttonSaveGroup = new System.Windows.Forms.Button();
 			this.buttonCancel = new System.Windows.Forms.Button();
+			this.buttonReset = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// labelGroupName
@@ -182,11 +183,22 @@
 			this.buttonCancel.Text = "Отмена";
 			this.buttonCancel.UseVisualStyleBackColor = true;
 			// 
+			// buttonReset
+			// 
+			this.buttonReset.Location = new System.Drawing.Point(19, 219);
+			this.buttonReset.Name = "buttonReset";
+			this.buttonReset.Size = new System.Drawing.Size(75, 23);
+			this.buttonReset.TabIndex = 14;
+			this.buttonReset.Text = "Сброс";
+			this.buttonReset.UseVisualStyleBackColor = true;
+			this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
+			// 
 			// AddGroupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(411, 254);
+			this.Controls.Add(this.buttonReset);
 			this.Controls.Add(this.buttonCancel);
 			this.Controls.Add(this.buttonSaveGroup);
 			this.Controls.Add(this.dateTimePickerGroupStart);
@@ -212,18 +224,19 @@
 		#endregion
 
 		private System.Windows.Forms.Label labelGroupName;
-		private System.Windows.Forms.TextBox textBoxGroupName;
 		private System.Windows.Forms.Label labelGroupDirection;
 		private System.Windows.Forms.Label labelGroupTime;
 		private System.Windows.Forms.Label labelGroupDays;
-		private System.Windows.Forms.ComboBox comboBoxGroupDirection;
-		private System.Windows.Forms.DateTimePicker dateTimePickerGroupTime;
-		private System.Windows.Forms.CheckedListBox checkedListBoxGroupDays;
 		private System.Windows.Forms.Label labelLearningForm;
-		private System.Windows.Forms.ComboBox comboBoxLearningForm;
 		private System.Windows.Forms.Label labelStartDate;
-		private System.Windows.Forms.DateTimePicker dateTimePickerGroupStart;
+		internal System.Windows.Forms.TextBox textBoxGroupName;
+		internal System.Windows.Forms.ComboBox comboBoxGroupDirection;
+		internal System.Windows.Forms.DateTimePicker dateTimePickerGroupTime;
+		internal System.Windows.Forms.CheckedListBox checkedListBoxGroupDays;
+		internal System.Windows.Forms.ComboBox comboBoxLearningForm;
+		internal System.Windows.Forms.DateTimePicker dateTimePickerGroupStart;
 		private System.Windows.Forms.Button buttonSaveGroup;
 		private System.Windows.Forms.Button buttonCancel;
+		private System.Windows.Forms.Button buttonReset;
 	}
 }
