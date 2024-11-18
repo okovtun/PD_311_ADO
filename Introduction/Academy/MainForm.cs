@@ -98,13 +98,13 @@ namespace Academy
 			if (addGroup.ShowDialog() == DialogResult.OK)
 			{
 				//LoadGroups();
-				Group group = new Group();
-				group.GroupName = addGroup.textBoxGroupName.Text;
-				group.StartDate = addGroup.dateTimePickerGroupStart.Value;
-				group.LearningTime = addGroup.dateTimePickerGroupTime.Value.TimeOfDay;
-				group.Direction = addGroup.comboBoxGroupDirection.SelectedIndex + 1;
-				group.LearningForm = addGroup.comboBoxLearningForm.SelectedIndex + 1;
-				group.LearningDays = addGroup.GetWeekDays();
+				Group group = new Group(addGroup);
+				//group.GroupName = addGroup.textBoxGroupName.Text;
+				//group.StartDate = addGroup.dateTimePickerGroupStart.Value;
+				//group.LearningTime = addGroup.dateTimePickerGroupTime.Value.TimeOfDay;
+				//group.Direction = addGroup.comboBoxGroupDirection.SelectedIndex + 1;
+				//group.LearningForm = addGroup.comboBoxLearningForm.SelectedIndex + 1;
+				//group.LearningDays = addGroup.GetWeekDays();
 				Connector.InsertGroup(group);
 				LoadGroups();
 			}
@@ -115,14 +115,15 @@ namespace Academy
 
 		private void dataGridViewGroups_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
-			Group group = new Group();
-			group.ID = Convert.ToInt32((sender as DataGridView).SelectedRows[0].Cells[0].Value);
-			group.GroupName = (sender as DataGridView).SelectedRows[0].Cells[1].Value.ToString();
-			group.StartDate = Convert.ToDateTime((sender as DataGridView).SelectedRows[0].Cells[2].Value);
-			group.LearningTime = Convert.ToDateTime((sender as DataGridView).SelectedRows[0].Cells[3].Value).TimeOfDay;
-			group.Direction = Connector.Directions[(sender as DataGridView).SelectedRows[0].Cells[4].Value.ToString()];
-			group.LearningForm = Connector.LearningForms[(sender as DataGridView).SelectedRows[0].Cells[5].Value.ToString()];
-			group.LearningDays = Convert.ToByte((sender as DataGridView).SelectedRows[0].Cells[6].Value);
+			Group group = new Group((sender as DataGridView).SelectedRows[0]);
+			//group.ID = Convert.ToInt32((sender as DataGridView).SelectedRows[0].Cells[0].Value);
+			//group.GroupName = (sender as DataGridView).SelectedRows[0].Cells[1].Value.ToString();
+			//group.StartDate = Convert.ToDateTime((sender as DataGridView).SelectedRows[0].Cells[2].Value);
+			//group.LearningTime = Convert.ToDateTime((sender as DataGridView).SelectedRows[0].Cells[3].Value).TimeOfDay;
+			//group.Direction = Connector.Directions[(sender as DataGridView).SelectedRows[0].Cells[4].Value.ToString()];
+			//group.LearningForm = Connector.LearningForms[(sender as DataGridView).SelectedRows[0].Cells[5].Value.ToString()];
+			//group.LearningDays = Convert.ToByte((sender as DataGridView).SelectedRows[0].Cells[6].Value);
+
 			addGroup.Init(group);
 
 			addGroup.ShowDialog();

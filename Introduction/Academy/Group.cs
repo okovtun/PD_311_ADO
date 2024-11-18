@@ -16,9 +16,15 @@ namespace Academy
 		public int LearningForm { get; set; }
 		public byte LearningDays { get; set; }
 
-		public Group()
+		public Group() { }
+		public Group(AddGroupForm form)
 		{
-
+			this.GroupName = form.textBoxGroupName.Text;
+			this.StartDate = form.dateTimePickerGroupStart.Value;
+			this.LearningTime = form.dateTimePickerGroupTime.Value.TimeOfDay;
+			this.Direction = form.comboBoxGroupDirection.SelectedIndex + 1;
+			this.LearningForm = form.comboBoxLearningForm.SelectedIndex + 1;
+			this.LearningDays = form.GetWeekDays();
 		}
 		public Group(Group other)
 		{
@@ -29,6 +35,16 @@ namespace Academy
 			this.Direction = other.Direction;
 			this.LearningForm = other.LearningForm;
 			this.LearningDays = other.LearningDays;
+		}
+		public Group(System.Windows.Forms.DataGridViewRow row)
+		{
+			this.ID = Convert.ToInt32(row.Cells[0].Value);
+			this.GroupName = row.Cells[1].Value.ToString();
+			this.StartDate = Convert.ToDateTime(row.Cells[2].Value);
+			this.LearningTime = Convert.ToDateTime(row.Cells[3].Value).TimeOfDay;
+			this.Direction = Connector.Directions[row.Cells[4].Value.ToString()];
+			this.LearningForm = Connector.LearningForms[row.Cells[5].Value.ToString()];
+			this.LearningDays = Convert.ToByte(row.Cells[6].Value);
 		}
 	}
 }
