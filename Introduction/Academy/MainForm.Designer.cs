@@ -188,7 +188,7 @@
 			this.dataGridViewGroups.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridViewGroups.Size = new System.Drawing.Size(782, 365);
 			this.dataGridViewGroups.TabIndex = 5;
-			this.dataGridViewGroups.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewGroups_CellDoubleClick);
+			this.dataGridViewGroups.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewGroups_RowHeaderMouseDoubleClick);
 			// 
 			// buttonAddGroup
 			// 

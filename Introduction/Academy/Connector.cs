@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Management;
 using System.Configuration;
+using System.Windows.Forms;
 
 namespace Academy
 {
@@ -102,6 +103,47 @@ namespace Academy
 			connection.Open();
 			command.ExecuteNonQuery();
 			connection.Close();
+		}
+		public static object[] UpdateGroup(Group group)
+		{
+			string updateCmd =
+"UPDATE Groups SET " +
+				"group_name=@group_name," +
+				"start_date=@start_date," +
+				"learning_time=@learning_time," +
+				"direction=@direction," +
+				"learning_form=@learning_form," +
+				"learning_days=@learning_days" +
+	$"WHERE group_id={group.ID}";
+			SqlCommand command = new SqlCommand(updateCmd, connection);
+			command.Parameters.Add("@group_name", SqlDbType.NVarChar, 16).Value = group.GroupName;
+			command.Parameters.Add("@start_date", SqlDbType.Date).Value = group.StartDate;
+			command.Parameters.Add("@learning_time", SqlDbType.Time).Value = group.LearningTime;
+			command.Parameters.Add("@direction", SqlDbType.SmallInt).Value = group.Direction;
+			command.Parameters.Add("@learning_form", SqlDbType.TinyInt).Value = group.LearningForm;
+			command.Parameters.Add("@learning_days", SqlDbType.TinyInt).Value = group.LearningDays;
+
+			string selectCmd =
+	$"SELECT group_name,start_date,learning_time,direction,learning_form,learning_days " +
+	$"FROM Groups WHERE group_id={group.ID}";
+			SqlCommand selectCommand = new SqlCommand(selectCmd, connection);
+
+			connection.Open();
+			command.ExecuteNonQuery();
+			SqlDataReader reader = selectCommand.ExecuteReader();
+			DataTable table = new DataTable();
+			for (int i = 0; i < reader.FieldCount; i++)
+				table.Columns.Add(reader.GetName(i));
+			reader.Read();
+			DataRow row = table.NewRow();
+			for (int i = 0; i < reader.FieldCount; i++)
+				row[i] = reader[i];
+			table.Rows.Add(row);
+			reader.Close();
+			connection.Close();
+			Console.WriteLine(table.Rows[0].ItemArray);
+			return table.Rows[0].ItemArray;
+			
 		}
 	}
 }
