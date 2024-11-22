@@ -170,3 +170,27 @@ namespace Academy
 		}
 	}
 }
+
+/*
+---------------------------
+DataSet:
+	-DataTable
+	-DataRelation
+	-ExtendedProperties
+---------------------------
+DataTable:
+	-DataRowCollection;
+	-DataColumnCollection;
+	-PrimaryKey;
+	-ChildRelations;
+	-ParentRelations;
+	-Constraints;
+	-ExtendedProperties;
+	-DataView;
+---------------------------
+1. Создать:
+	
+2. Заполнить данными из Базы;
+3. Выполнять навигацию;
+---------------------------
+ */
