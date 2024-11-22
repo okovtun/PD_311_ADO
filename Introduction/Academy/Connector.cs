@@ -123,33 +123,50 @@ namespace Academy
 			command.Parameters.Add("@learning_form", SqlDbType.TinyInt).Value = group.LearningForm;
 			command.Parameters.Add("@learning_days", SqlDbType.TinyInt).Value = group.LearningDays;
 
-			string selectCmd =
-	$"SELECT group_id,group_name,start_date,learning_time,direction_name,form_name,learning_days " +
-	$"FROM Groups,Directions,LearningForms " +
-	$"WHERE group_id={group.ID} AND direction=direction_id AND learning_form=form_id";
-			SqlCommand selectCommand = new SqlCommand(selectCmd, connection);
+			//		string selectCmd =
+			//$"SELECT group_id,group_name,start_date,learning_time,direction_name,form_name,learning_days " +
+			//$"FROM Groups,Directions,LearningForms " +
+			//$"WHERE group_id={group.ID} AND direction=direction_id AND learning_form=form_id";
+			//		SqlCommand selectCommand = new SqlCommand(selectCmd, connection);
+
+			//		connection.Open();
+			//		command.ExecuteNonQuery();
+			//		SqlDataReader reader = selectCommand.ExecuteReader();
+			//		DataTable table = new DataTable();
+			//		for (int i = 0; i < reader.FieldCount; i++)
+			//			table.Columns.Add(reader.GetName(i));
+			//		reader.Read();
+			//		DataRow row = table.NewRow();
+			//		for (int i = 0; i < reader.FieldCount; i++)
+			//			row[i] = reader[i];
+			//		table.Rows.Add(row);
+			//		reader.Close();
+			//		connection.Close();
+			//		Console.WriteLine(table.Rows[0].ItemArray);
+			//		table.Rows[0][table.Columns.Count - 1] = 
+			//			Week.ExtractDaysToString
+			//			(
+			//				Convert.ToByte(table.Rows[0][table.Columns.Count - 1])
+			//			);
+			//		return table.Rows[0].ItemArray;
+
 
 			connection.Open();
 			command.ExecuteNonQuery();
-			SqlDataReader reader = selectCommand.ExecuteReader();
-			DataTable table = new DataTable();
-			for (int i = 0; i < reader.FieldCount; i++)
-				table.Columns.Add(reader.GetName(i));
-			reader.Read();
-			DataRow row = table.NewRow();
-			for (int i = 0; i < reader.FieldCount; i++)
-				row[i] = reader[i];
-			table.Rows.Add(row);
-			reader.Close();
 			connection.Close();
-			Console.WriteLine(table.Rows[0].ItemArray);
-			table.Rows[0][table.Columns.Count - 1] = 
+
+			DataTable table = Select
+				(
+				"group_id,group_name,start_date,learning_time,direction_name,form_name,learning_days",
+				"Groups,Directions,LearningForms",
+				$"group_id={group.ID} AND direction=direction_id AND learning_form=form_id"
+				);
+			table.Rows[0][table.Columns.Count - 1] =
 				Week.ExtractDaysToString
 				(
 					Convert.ToByte(table.Rows[0][table.Columns.Count - 1])
 				);
 			return table.Rows[0].ItemArray;
-			
 		}
 	}
 }
