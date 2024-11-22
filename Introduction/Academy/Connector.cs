@@ -17,15 +17,51 @@ namespace Academy
 		static SqlConnection connection;
 		public static Dictionary<string, int> LearningForms;
 		public static Dictionary<string, int> Directions;
+		public static DataSet GroupsRelatedData = null;
 		static Connector()
 		{
 			//connectionString = ConfigurationManager.ConnectionStrings["Academy_PD_311"].ConnectionString;
 			connection = new SqlConnection(connectionString);
 
-			LearningForms = LoadTableToDiscionary("form_id", "form_name", "LearningForms");
-			Directions = LoadTableToDiscionary("direction_id", "direction_name", "Directions");
+			LearningForms = LoadTableToDicionary("form_id", "form_name", "LearningForms");
+			Directions = LoadTableToDicionary("direction_id", "direction_name", "Directions");
+
+			//https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/dataset-datatable-dataview/adding-a-datatable-to-a-dataset
+			GroupsRelatedData = new DataSet(nameof(GroupsRelatedData));
+			GroupsRelatedData.Tables.Add("Directions");
+			GroupsRelatedData.Tables["Directions"].Columns.Add("direction_id", typeof(byte));
+			GroupsRelatedData.Tables["Directions"].Columns.Add("direction_name", typeof(string));
+			GroupsRelatedData.Tables["Directions"].PrimaryKey = new DataColumn[] { GroupsRelatedData.Tables["Directions"].Columns["direction_id"] };
+
+			GroupsRelatedData.Tables.Add("LearningForms");
+			GroupsRelatedData.Tables["LearningForms"].Columns.Add("form_id", typeof(byte));
+			GroupsRelatedData.Tables["LearningForms"].Columns.Add("form_name", typeof(string));
+			GroupsRelatedData.Tables["LearningForms"].PrimaryKey = new DataColumn[] { GroupsRelatedData.Tables["LearningForms"].Columns["form_id"] };
+
+			GroupsRelatedData.Tables.Add("Groups");
+			GroupsRelatedData.Tables["Groups"].Columns.Add("group_id", typeof(int));
+			GroupsRelatedData.Tables["Groups"].Columns.Add("group_name", typeof(string));
+			GroupsRelatedData.Tables["Groups"].Columns.Add("start_date", typeof(DateTime));
+			GroupsRelatedData.Tables["Groups"].Columns.Add("direction", typeof(byte));
+			GroupsRelatedData.Tables["Groups"].Columns.Add("learning_form", typeof(byte));
+			GroupsRelatedData.Tables["Groups"].Columns.Add("learning_days", typeof(byte));
+			GroupsRelatedData.Tables["Groups"].PrimaryKey = new DataColumn[] { GroupsRelatedData.Tables["Groups"].Columns["group_id"] };
+
+			GroupsRelatedData.Relations.Add
+				(
+				"GroupsDirection",
+				GroupsRelatedData.Tables["Directions"].Columns["direction_id"],
+				GroupsRelatedData.Tables["Groups"].Columns["direction"]
+				);
+
+			GroupsRelatedData.Relations.Add
+				(
+				"GroupsLearningForm",
+				GroupsRelatedData.Tables["LearningForms"].Columns["form_id"],
+				GroupsRelatedData.Tables["Groups"].Columns["learning_form"]
+				);
 		}
-		public static Dictionary<string, int> LoadTableToDiscionary(string id, string value, string table)
+		public static Dictionary<string, int> LoadTableToDicionary(string id, string value, string table)
 		{
 			Dictionary<string, int> dictionary = new Dictionary<string, int>();
 			string cmd = $"SELECT {id}, {value} FROM {table}";
