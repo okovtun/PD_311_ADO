@@ -114,7 +114,7 @@ namespace Academy
 				"direction=@direction," +
 				"learning_form=@learning_form," +
 				"learning_days=@learning_days" +
-	$"WHERE group_id={group.ID}";
+	$" WHERE group_id={group.ID}";
 			SqlCommand command = new SqlCommand(updateCmd, connection);
 			command.Parameters.Add("@group_name", SqlDbType.NVarChar, 16).Value = group.GroupName;
 			command.Parameters.Add("@start_date", SqlDbType.Date).Value = group.StartDate;
@@ -124,8 +124,9 @@ namespace Academy
 			command.Parameters.Add("@learning_days", SqlDbType.TinyInt).Value = group.LearningDays;
 
 			string selectCmd =
-	$"SELECT group_name,start_date,learning_time,direction,learning_form,learning_days " +
-	$"FROM Groups WHERE group_id={group.ID}";
+	$"SELECT group_id,group_name,start_date,learning_time,direction_name,form_name,learning_days " +
+	$"FROM Groups,Directions,LearningForms " +
+	$"WHERE group_id={group.ID} AND direction=direction_id AND learning_form=form_id";
 			SqlCommand selectCommand = new SqlCommand(selectCmd, connection);
 
 			connection.Open();
@@ -142,6 +143,11 @@ namespace Academy
 			reader.Close();
 			connection.Close();
 			Console.WriteLine(table.Rows[0].ItemArray);
+			table.Rows[0][table.Columns.Count - 1] = 
+				Week.ExtractDaysToString
+				(
+					Convert.ToByte(table.Rows[0][table.Columns.Count - 1])
+				);
 			return table.Rows[0].ItemArray;
 			
 		}

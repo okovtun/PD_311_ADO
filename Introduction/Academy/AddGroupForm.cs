@@ -48,6 +48,7 @@ namespace Academy
 			//Group.GroupName = textBoxGroupName.Text;
 			//Group.LearningDays = GetWeekDays();
 			//Group.LearningForm = Connector.InsertGroup(Group);
+			SaveGroup();
 			Console.WriteLine(days);
 		}
 		public void ClearData()
@@ -67,6 +68,15 @@ namespace Academy
 			SetWeekDays(group.LearningDays);
 			dateTimePickerGroupStart.Value = group.StartDate;
 			dateTimePickerGroupTime.Value = DateTime.Now.Date + group.LearningTime;
+		}
+		public void SaveGroup()
+		{
+			Group.GroupName		= this.textBoxGroupName.Text;
+			Group.StartDate		= this.dateTimePickerGroupStart.Value;
+			Group.LearningTime	= this.dateTimePickerGroupTime.Value.TimeOfDay;
+			Group.Direction		= this.comboBoxGroupDirection.SelectedIndex + 1;
+			Group.LearningForm	= this.comboBoxLearningForm.SelectedIndex + 1;
+			Group.LearningDays	= this.GetWeekDays();
 		}
 
 		private void buttonReset_Click(object sender, EventArgs e)

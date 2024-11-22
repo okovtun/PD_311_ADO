@@ -141,9 +141,10 @@ namespace Academy
 
 
 				//TODO:Update DataGridViewRow
-				Connector.UpdateGroup(group);
+				//Connector.UpdateGroup(group);
 				//DataTable table = Connector.UpdateGroup(group);
-				//dataGridViewGroups.Rows[index].SetValues(new object[] { })
+				//group = addGroup.Group;
+				dataGridViewGroups.Rows[index].SetValues(Connector.UpdateGroup(addGroup.Group));
 			}
 		}
 
