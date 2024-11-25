@@ -4,12 +4,20 @@ https://www.youtube.com/playlist?list=PLeqyOOqxeiIN-Ery_ncd9vBdSXIuXTtBv
 ADO.NET
 https://www.dbdelta.com/addwithvalue-is-evil/
 
+DataSet:
+https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/populating-a-dataset-from-a-dataadapter
+
 TODO:
+0. Сделать BackUp базы!!!
+1. Обеспечить возможность добавлять фотографию студента;
+2. Проверять все поля при добавлении/изменении студента по регулярному выражению;
+
+DONE:
 1. Отобразить по человечески дни недели, в которые обучается группа;	DONE
 2. При двойном щелчке по разделителю в заголовке, ширина столбца должна изменять размер по содержимому;	DONE
 3. Оптимизировать код в методе Connector.InsertGroup();
 4. Создать ветку 'AcademyDataSet', и в этой ветке загрузить выпадающие списки при помощи 'DataSet';
-5. Обеспечить возможность добавления и изменения студентов;
+5. Обеспечить возможность добавления и изменения студентов;		DONE
 
 DONE:
 1. Распаковать Байт, хранящий дни недели в CheckedListBox;
