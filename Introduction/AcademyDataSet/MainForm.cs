@@ -26,6 +26,20 @@ namespace AcademyDataSet
 			Console.WriteLine(connectionString);
 			connection = new SqlConnection(connectionString);
 
+			LoadGroupsRelatingData();
+
+			comboBoxDirection.DataSource = GroupsRelatingData.Tables["Directions"];
+			comboBoxDirection.DisplayMember = "direction_name";
+			comboBoxDirection.ValueMember = "direction_id";
+			comboBoxDirection.SelectedIndex = 0;
+
+			comboBoxGroup.DataSource = GroupsRelatingData.Tables["Groups"];
+			comboBoxGroup.DisplayMember = "group_name";
+			comboBoxGroup.ValueMember = "group_id";
+			comboBoxGroup.SelectedIndex = 0;
+		}
+		void LoadGroupsRelatingData()
+		{
 			//1) Создаем DataSet:
 			GroupsRelatingData = new DataSet(nameof(GroupsRelatingData));
 
@@ -97,7 +111,36 @@ namespace AcademyDataSet
 				Console.WriteLine(";");
 			}
 		}
+
 		[DllImport("kernel32")]
 		public static extern bool AllocConsole();
+
+		private void comboBoxDirection_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			//DataRow[] row = 
+			//	GroupsRelatingData.Tables["Directions"].
+			//	Select($"{GroupsRelatingData.Tables["Directions"].Columns["direction_id"]}={(sender as ComboBox).SelectedValue[0]}");
+			//comboBoxGroup.DataSource = row[0].GetChildRows("GroupsDirection");
+			//comboBoxGroup.DisplayMember = "group_name";
+			//comboBoxGroup.ValueMember = "group_id";
+
+			//DataRowView item = ((sender as ComboBox).SelectedItem as DataRowView);
+			//DataRow row = item.Row;
+			//DataRow[] children = row.GetChildRows("GroupsDirection");
+			//comboBoxGroup.DataSource = children;
+			//comboBoxGroup.DisplayMember = "group_name";
+			//comboBoxGroup.ValueMember = "group_id";
+			//Console.WriteLine((children[0].ItemArray[0] as DataColumn).ColumnName);
+
+			object selectedValue = (sender as ComboBox).SelectedValue;
+			string to_string = selectedValue.ToString();
+			string get_type = selectedValue.GetType().ToString();
+			if (selectedValue.ToString() != selectedValue.GetType().ToString())
+			{
+				string filter = $"direction = {selectedValue.ToString()}";
+				Console.WriteLine(filter);
+				GroupsRelatingData.Tables["Groups"].DefaultView.RowFilter = filter;
+			}
+		}
 	}
 }

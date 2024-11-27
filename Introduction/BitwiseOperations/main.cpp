@@ -1,4 +1,5 @@
 #include<iostream>
+#include<string>
 #include<conio.h>
 using namespace std;
 
@@ -9,6 +10,8 @@ void ShiftRight(char arr[], const int n, int number_of_shifts);
 void main()
 {
 	setlocale(LC_ALL, "");
+	std::string str;
+	str.length();
 	/*cout << (111 ^ 111) << endl;
 	cout << (49 & 1) << endl;
 	cout << (-5 >> 2) << endl;*/
