@@ -31,12 +31,14 @@ namespace AcademyDataSet
 			comboBoxDirection.DataSource = GroupsRelatingData.Tables["Directions"];
 			comboBoxDirection.DisplayMember = "direction_name";
 			comboBoxDirection.ValueMember = "direction_id";
-			comboBoxDirection.SelectedIndex = 0;
+			comboBoxDirection.AccessibleDefaultActionDescription = "Все направления";
+			//comboBoxDirection.Items.Insert(0, "Все направления");
+			comboBoxDirection.SelectedIndex = -1;
 
 			comboBoxGroup.DataSource = GroupsRelatingData.Tables["Groups"];
 			comboBoxGroup.DisplayMember = "group_name";
 			comboBoxGroup.ValueMember = "group_id";
-			comboBoxGroup.SelectedIndex = 0;
+			comboBoxGroup.SelectedIndex = -1;
 		}
 		void LoadGroupsRelatingData()
 		{
@@ -133,14 +135,21 @@ namespace AcademyDataSet
 			//Console.WriteLine((children[0].ItemArray[0] as DataColumn).ColumnName);
 
 			object selectedValue = (sender as ComboBox).SelectedValue;
-			string to_string = selectedValue.ToString();
-			string get_type = selectedValue.GetType().ToString();
-			if (selectedValue.ToString() != selectedValue.GetType().ToString())
+			//string to_string = selectedValue.ToString();
+			//string get_type = selectedValue.GetType().ToString();
+			if (selectedValue?.ToString() != selectedValue?.GetType().ToString())
 			{
 				string filter = $"direction = {selectedValue.ToString()}";
 				Console.WriteLine(filter);
 				GroupsRelatingData.Tables["Groups"].DefaultView.RowFilter = filter;
 			}
+		}
+
+		private void buttonResetFilters_Click(object sender, EventArgs e)
+		{
+			GroupsRelatingData.Tables["Groups"].DefaultView.RowFilter = "";
+			comboBoxDirection.SelectedIndex = -1;
+			comboBoxGroup.SelectedIndex = -1;
 		}
 	}
 }

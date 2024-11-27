@@ -32,6 +32,7 @@
 			this.labelGroup = new System.Windows.Forms.Label();
 			this.comboBoxDirection = new System.Windows.Forms.ComboBox();
 			this.comboBoxGroup = new System.Windows.Forms.ComboBox();
+			this.buttonResetFilters = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// labelDirection
@@ -71,11 +72,22 @@
 			this.comboBoxGroup.Size = new System.Drawing.Size(236, 21);
 			this.comboBoxGroup.TabIndex = 3;
 			// 
+			// buttonResetFilters
+			// 
+			this.buttonResetFilters.Location = new System.Drawing.Point(366, 13);
+			this.buttonResetFilters.Name = "buttonResetFilters";
+			this.buttonResetFilters.Size = new System.Drawing.Size(75, 23);
+			this.buttonResetFilters.TabIndex = 4;
+			this.buttonResetFilters.Text = "Сброс";
+			this.buttonResetFilters.UseVisualStyleBackColor = true;
+			this.buttonResetFilters.Click += new System.EventHandler(this.buttonResetFilters_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(448, 160);
+			this.ClientSize = new System.Drawing.Size(456, 160);
+			this.Controls.Add(this.buttonResetFilters);
 			this.Controls.Add(this.comboBoxGroup);
 			this.Controls.Add(this.comboBoxDirection);
 			this.Controls.Add(this.labelGroup);
@@ -94,6 +106,7 @@
 		private System.Windows.Forms.Label labelGroup;
 		private System.Windows.Forms.ComboBox comboBoxDirection;
 		private System.Windows.Forms.ComboBox comboBoxGroup;
+		private System.Windows.Forms.Button buttonResetFilters;
 	}
 }
 
